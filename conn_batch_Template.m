@@ -2,7 +2,7 @@
 % Created by Andrew Jahn, University of Michigan, 02.27.2020
 % Adapted from Alfonso Nieto-Castanon's script, www.alfnie.com 
 
-%% FIND functional/structural files
+% FIND functional/structural files
 % note: this will look for all data in these folders, irrespestive of the specific download subsets entered as command-line arguments
 NSUBJECTS=1;
 cwd=pwd;
@@ -18,12 +18,12 @@ disp([num2str(size(FUNCTIONAL_FILE,2)),' sessions']);
 TR=3.56; % Repetition time
 
 
-%% CONN-SPECIFIC SECTION: RUNS PREPROCESSING/SETUP/DENOISING/ANALYSIS STEPS
-%% Prepares batch structure
+% CONN-SPECIFIC SECTION: RUNS PREPROCESSING/SETUP/DENOISING/ANALYSIS STEPS
+% Prepares batch structure
 clear batch;
 batch.filename=fullfile(cwd,'Arithmetic_Scripted.mat');            % New conn_*.mat experiment name
 
-%% SETUP & PREPROCESSING step (using default values for most parameters, see help conn_batch to define non-default values)
+% SETUP & PREPROCESSING step (using default values for most parameters, see help conn_batch to define non-default values)
 % CONN Setup                                            % Default options (uses all ROIs in conn/rois/ directory); see conn_batch for additional options 
 % CONN Setup.preprocessing                               (realignment/coregistration/segmentation/normalization/smoothing)
 batch.Setup.isnew=1;
@@ -57,7 +57,7 @@ batch.Setup.rois.multiplelabels = 1;
 % clear batch;
 % batch.filename=fullfile(cwd,'Arithmetic_Scripted.mat');            % Existing conn_*.mat experiment name
 
-%% DENOISING step
+% DENOISING step
 % CONN Denoising                                    % Default options (uses White Matter+CSF+realignment+scrubbing+conditions as confound regressors); see conn_batch for additional options 
 batch.Denoising.filter=[0.01, 0.1];                 % frequency filter (band-pass values, in Hz)
 batch.Denoising.done=1;
@@ -68,15 +68,15 @@ batch.Denoising.overwrite='Yes';
 % clear batch;
 % batch.filename=fullfile(cwd,'Arithmetic_Scripted.mat');            % Existing conn_*.mat experiment name
 
-%% FIRST-LEVEL ANALYSIS step
+% FIRST-LEVEL ANALYSIS step
 % CONN Analysis                                     % Default options (uses all ROIs in conn/rois/ as connectivity sources); see conn_batch for additional options 
 batch.Analysis.done=1;
 batch.Analysis.overwrite='Yes';
 
-%% Run all analyses
+% Run all analyses
 conn_batch(batch);
 
-%% CONN Display
+% CONN Display
 % launches conn gui to explore results
 conn
 conn('load',fullfile(cwd,'Arithmetic_Scripted.mat'));
